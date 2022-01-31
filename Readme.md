@@ -5,7 +5,7 @@
 <!-- default badges end -->
 # GridView for Web Forms - How to update an external control during a callback
 <!-- run online -->
-**[[Run Online]](https://codecentral.devexpress.com/e2379/)**
+**[[Run Online]](https://codecentral.devexpress.com/128535988/)**
 <!-- run online end -->
 
 A control can update only its own rendering in a callback. This example shows how to update the [ASPxLabel](https://docs.devexpress.com/AspNet/DevExpress.Web.ASPxLabel) control when a callback of the [ASPxGridView](https://docs.devexpress.com/AspNet/DevExpress.Web.ASPxGridView) control is finished.

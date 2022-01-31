@@ -1,23 +1,51 @@
-<!-- default badges list -->
-![](https://img.shields.io/endpoint?url=https://codecentral.devexpress.com/api/v1/VersionRange/128535988/15.1.10%2B)
-[![](https://img.shields.io/badge/Open_in_DevExpress_Support_Center-FF7200?style=flat-square&logo=DevExpress&logoColor=white)](https://supportcenter.devexpress.com/ticket/details/E2379)
-[![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
-<!-- default badges end -->
-<!-- default file list -->
-*Files to look at*:
-
-* [Default.aspx](./CS/Default.aspx) (VB: [Default.aspx](./VB/Default.aspx))
-* [Default.aspx.cs](./CS/Default.aspx.cs) (VB: [Default.aspx.vb](./VB/Default.aspx.vb))
-<!-- default file list end -->
-# ASPxGridView - How to update an external control during a callback
+# GridView for Web Forms - How to update an external control during a callback
 <!-- run online -->
 **[[Run Online]](https://codecentral.devexpress.com/e2379/)**
 <!-- run online end -->
 
+A control can update only its own rendering in a callback. This example shows how to update the [ASPxLabel](https://docs.devexpress.com/AspNet/DevExpress.Web.ASPxLabel) control when a callback of the [ASPxGridView](https://docs.devexpress.com/AspNet/DevExpress.Web.ASPxGridView) control is finished.
 
-<p>By default, the ASPxGridView works during callbacks and there's no way to update an external control (that isn't a child control of the callback owner) on the server side. The following article describes this limitation in detail:</p><p><a href="https://www.devexpress.com/Support/Center/p/K18387">The Concept of Callbacks</a></p><p>However, the ASPxGridView as any other ASP.NET control has the <a href="http://documentation.devexpress.com/#AspNet/DevExpressWebASPxGridViewASPxGridView_JSPropertiestopic">JSProperties</a> feature that allows passing a value from the  server to the client. Also, the client-side EndCallback is raised each time when a callback is executed successfully.<br />
-So, it is possible to set a JSProperty on the server, get it on the <a href="http://documentation.devexpress.com/#AspNet/DevExpressWebASPxGridViewScriptsASPxClientGridView_EndCallbacktopic">EndCallback</a> and change a "target" control using its client-side capabilities.</p><p>This example illustrates how to use the ASPxLabel to identify that the grid was successfully updated. </p><p>A similar approach my be used with any other DevExpress ASP.NET control that can send callbacks (ASPxCallback, ASPxCallbackPanel, ASPxTreeList, ASPxComboBox and so on).</p>
+![Label updated on grid callback](updated-label-on-grid-callback.png)
 
-<br/>
+[ASPxGridView](https://docs.devexpress.com/AspNet/DevExpress.Web.ASPxGridView) sends callbacks to update row data on the server. The control raises the [EndCallback](https://docs.devexpress.com/AspNet/js-ASPxClientGridView.EndCallback) client event after a callback is successfully executed. You can handle the event to perform custom actions with another control when the callback is finished.
 
+```aspx
+<dx:ASPxGridView ...>
+    <ClientSideEvents EndCallback="OnEndCallBack" />
+</dx:ASPxGridView>
+```
 
+[ASPxGridView](https://docs.devexpress.com/AspNet/DevExpress.Web.ASPxGridView) implements the [JSProperties](https://docs.devexpress.com/AspNet/DevExpress.Web.ASPxGridBase.JSProperties) property that allows you to pass information from the server to the client. In this example, an updated row’s key is saved to the [JSProperties](https://docs.devexpress.com/AspNet/DevExpress.Web.ASPxGridBase.JSProperties) property on the server. This value is then used on the client to display information about the updated row.
+
+```cs
+protected void Page_Load(object sender, EventArgs e) {
+    ASPxGridView1.JSProperties["cpIsUpdated"] = "";
+}
+protected void ASPxGridView1_RowUpdated(object sender, DevExpress.Web.Data.ASPxDataUpdatedEventArgs e) {
+    if (e.Exception == null) {
+        ((ASPxGridView)sender).JSProperties["cpIsUpdated"] = e.Keys[0];
+    }
+}
+```
+
+```js
+function OnEndCallBack(s, e) {
+    if (s.cpIsUpdated != '') {
+        clientLabel.SetText('Category ' + s.cpIsUpdated + ' is updated successfully');
+    }
+    else {
+        clientLabel.SetText('');
+    }
+}
+```
+
+## Files to Look At
+<!-- default file list -->
+- [Default.aspx](./CS/Default.aspx) (VB: [Default.aspx](./VB/Default.aspx))
+- [Default.aspx.cs](./CS/Default.aspx.cs) (VB: [Default.aspx.vb](./VB/Default.aspx.vb))
+<!-- default file list end -->
+
+## Documentation
+
+- [Callbacks](https://docs.devexpress.com/AspNet/402559/common-concepts/callbacks)
+- [Update a Control in a Callback of Another Control (Workarounds)](https://docs.devexpress.com/AspNet/402219/common-concepts/callbacks/update-control-in-callback-of-another-control)

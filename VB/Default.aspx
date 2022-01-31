@@ -10,7 +10,7 @@
     <script type="text/javascript">
         function OnEndCallBack(s, e) {
             if (s.cpIsUpdated != '') {
-                clientLabel.SetText('The category ' + s.cpIsUpdated + ' is updated successfully');
+                clientLabel.SetText('Category ' + s.cpIsUpdated + ' is updated successfully');
                 clientLabel.GetMainElement().style.backgroundColor = 'green';
                 clientLabel.GetMainElement().style.color = 'white';
             }

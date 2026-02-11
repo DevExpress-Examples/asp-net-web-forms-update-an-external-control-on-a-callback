@@ -53,7 +53,7 @@ function OnEndCallBack(s, e) {
 - [Callbacks](https://docs.devexpress.com/AspNet/402559/common-concepts/callbacks)
 - [Update a Control in a Callback of Another Control (Workarounds)](https://docs.devexpress.com/AspNet/402219/common-concepts/callbacks/update-control-in-callback-of-another-control)
 <!-- feedback -->
-## Does This Example Address Your Development Requirements/Objectives?
+## Does this example address your development requirements/objectives?
 
 [<img src="https://www.devexpress.com/support/examples/i/yes-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=asp-net-web-forms-update-an-external-control-on-a-callback&~~~was_helpful=yes) [<img src="https://www.devexpress.com/support/examples/i/no-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=asp-net-web-forms-update-an-external-control-on-a-callback&~~~was_helpful=no)
 
